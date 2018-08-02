@@ -4,7 +4,7 @@ import requests
 
 from datadog import initialize, api
 
-LIMIT = 5 # Change me later. Set to 0 for infinite.
+LIMIT = os.getenv('LIMIT', 0) 
 
 DD_API_KEY = os.getenv('DD_API_KEY', '<YOUR_API_KEY>')
 DD_APP_KEY = os.getenv('DD_APP_KEY', '<YOUR_APP_KEY>')
