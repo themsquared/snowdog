@@ -4,6 +4,7 @@ import requests
 
 from datadog import initialize, api
 
+LIMIT = 5 # Change me later. Set to 0 for infinite.
 
 DD_API_KEY = os.getenv('DD_API_KEY', '<YOUR_API_KEY>')
 DD_APP_KEY = os.getenv('DD_APP_KEY', '<YOUR_APP_KEY>')
@@ -47,8 +48,12 @@ if __name__ == '__main__':
     initialize(**options)
 
     hosts = api.Infrastructure.search(q='hosts:')['results']['hosts']
-
+    
+    cnt = 0
     for host in hosts:
+        if cnt >= LIMIT && LIMIT > 0: # Only helpful for testing.
+           break # Bail out. We hit our limit.
+
         print 'Querying ServiceNow for host {}'.format(host)
         snow_tags = []
         host_json = get_snow_host(host)
@@ -64,3 +69,4 @@ if __name__ == '__main__':
 
         new_tags = combine_tags(dog_tags, snow_tags)
         set_dd_host_tags(host, new_tags)
+        cnt += 1
