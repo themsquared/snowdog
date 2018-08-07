@@ -51,7 +51,7 @@ if __name__ == '__main__':
     
     cnt = 0
     for host in hosts:
-        if cnt >= LIMIT && LIMIT > 0: # Only helpful for testing.
+        if cnt >= LIMIT and LIMIT > 0: # Only helpful for testing.
            break # Bail out. We hit our limit.
 
         print 'Querying ServiceNow for host {}'.format(host)
